@@ -104,7 +104,7 @@ export default {
 			const payload = payloadFromArgs || this.payload;
 			this.service(this.payloadResolver(payload))
 				.then(
-					(data) => {
+					({ data }) => {
 						this.data = this.dataResolver(data);
 						this.$emit('success', this.data);
 
