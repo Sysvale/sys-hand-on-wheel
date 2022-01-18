@@ -1,11 +1,15 @@
 import swal from 'sweetalert2';
-import get$1 from 'lodash.get';
-import { isArray, isObject, snakeCase, get } from 'lodash';
+import get from 'lodash.get';
+import camelCase from 'lodash.camelcase';
+import isObject from 'lodash.isobject';
+import snakeCase from 'lodash.snakecase';
+
+var isArray = function (arg) { return Array.isArray(arg); };
 
 var convertKeysToCamelCase = function (data) {
-	if (_.isArray(data)) {
+	if (isArray(data)) {
 		return data.map(function (element) {
-			if (_.isObject(element) || _.isArray(element)) {
+			if (isObject(element) || isArray(element)) {
 				return convertKeysToCamelCase(element);
 			}
 			return element;
@@ -13,20 +17,22 @@ var convertKeysToCamelCase = function (data) {
 	}
 	var newData = {};
 	Object.keys(data).forEach(function (key) {
-		if (_.isObject(data[key]) || _.isArray(data[key])) {
-			newData[_.camelCase(key)] = convertKeysToCamelCase(data[key]);
+		if (isObject(data[key]) || isArray(data[key])) {
+			newData[camelCase(key)] = convertKeysToCamelCase(data[key]);
 		} else {
-			newData[_.camelCase(key)] = data[key];
+			newData[camelCase(key)] = data[key];
 		}
 	});
 
 	return newData;
 };
 
+var isArray$1 = function (arg) { return Array.isArray(arg); };
+
 var convertKeysToSnakeCase = function (data) {
-	if (isArray(data)) {
+	if (isArray$1(data)) {
 		return data.map(function (element) {
-			if (isObject(element) || isArray(element)) {
+			if (isObject(element) || isArray$1(element)) {
 				return convertKeysToSnakeCase(element);
 			}
 			return element;
@@ -34,7 +40,7 @@ var convertKeysToSnakeCase = function (data) {
 	}
 	var newData = {};
 	Object.keys(data).forEach(function (key) {
-		if (isObject(data[key]) || isArray(data[key])) {
+		if (isObject(data[key]) || isArray$1(data[key])) {
 			newData[snakeCase(key)] = convertKeysToSnakeCase(data[key]);
 		} else {
 			newData[snakeCase(key)] = data[key];
@@ -75,7 +81,7 @@ var script = {
 	props: {
 		service: {
 			type: Function,
-			default: function () { return ({}); },
+			required: true,
 		},
 		payload: {
 			type: Object,
@@ -99,9 +105,11 @@ var script = {
 		},
 		errorFeedbackResolver: {
 			type: Function,
+			default: null,
 		},
 		successFeedbackResolver: {
 			type: Function,
+			default: null,
 		},
 		showSuccessFeedback: {
 			type: Boolean,
@@ -155,7 +163,9 @@ var script = {
 			var payload = payloadFromArgs || this.payload;
 			this.service(this.payloadResolver(payload))
 				.then(
-					function (data) {
+					function (ref) {
+						var data = ref.data;
+
 						this$1.data = this$1.dataResolver(data);
 						this$1.$emit('success', this$1.data);
 
@@ -178,14 +188,9 @@ var script = {
 
 						if (!this$1.hideErrorFeedback) {
 							var errorMessage = getFirstErrorMessage(
-								get$1(error, 'response.data', null),
+								get(error, 'response.data', null),
 								'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.'
 							);
-
-							if (this$1.errorFeedback) {
-								this$1.errorFeedback(this$1);
-								return;
-							}
 
 							if (this$1.errorFeedbackResolver) {
 								this$1.errorFeedbackResolver({ vm: this$1, error: error, errorMessage: errorMessage });
@@ -234,7 +239,7 @@ var script = {
 			action: this.action,
 			labelHelper: this.labelHelper,
 			errorMessage: getFirstErrorMessage(
-				get$1(this.error, 'response.data', null),
+				get(this.error, 'response.data', null),
 				'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.'
 			),
 		});
@@ -359,17 +364,56 @@ var components = /*#__PURE__*/Object.freeze({
 	RequestProvider: __vue_component__
 });
 
+function removeAccents(str) {
+	if ( str === void 0 ) str = '';
+
+	var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+	var accentsOut = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+	var strLen = str.length;
+	var newStr = str.split('');
+	var x;
+
+	for (var i = 0; i < strLen; i += 1) {
+		x = accents.indexOf(str[i]);
+		if (x !== -1) {
+			newStr[i] = accentsOut[x];
+		}
+	}
+
+	newStr = newStr.join('');
+	newStr = newStr.split('.').join('');
+	newStr = newStr.split('-').join('');
+	newStr = newStr.split('/').join('');
+
+	return newStr;
+}
+
+function generateKey(length) {
+	if ( length === void 0 ) length = 8;
+
+	var result = '';
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i += 1) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+}
+
 // install function executed by Vue.use()
 function install(Vue) {
 	if (install.installed) { return; }
 
 	install.installed = true;
 
-	Object.defineProperty(Vue.prototype, '_', { value: _ });
+	Vue.prototype.$showConvertKeysToCamelCase = convertKeysToCamelCase;
+	Vue.prototype.$showConvertKeysToSnakeCase = convertKeysToSnakeCase;
+	Vue.prototype.$showRemoveAccents = removeAccents;
+	Vue.prototype.$showGenerateKey = generateKey;
 
 	Object.keys(components).forEach(function (componentName) {
 		Vue.component(
-			("show-" + (componentName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase())),
+			("Show" + componentName),
 			components[componentName]
 		);
 	});

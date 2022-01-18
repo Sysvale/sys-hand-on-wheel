@@ -1,7 +1,9 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var swal=_interopDefault(require('sweetalert2')),get=_interopDefault(require('lodash.get')),lodash=require('lodash');var convertKeysToCamelCase = function (data) {
-	if (_.isArray(data)) {
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var swal=_interopDefault(require('sweetalert2')),get=_interopDefault(require('lodash.get')),camelCase=_interopDefault(require('lodash.camelcase')),isObject=_interopDefault(require('lodash.isobject')),snakeCase=_interopDefault(require('lodash.snakecase'));var isArray = function (arg) { return Array.isArray(arg); };
+
+var convertKeysToCamelCase = function (data) {
+	if (isArray(data)) {
 		return data.map(function (element) {
-			if (_.isObject(element) || _.isArray(element)) {
+			if (isObject(element) || isArray(element)) {
 				return convertKeysToCamelCase(element);
 			}
 			return element;
@@ -9,18 +11,20 @@
 	}
 	var newData = {};
 	Object.keys(data).forEach(function (key) {
-		if (_.isObject(data[key]) || _.isArray(data[key])) {
-			newData[_.camelCase(key)] = convertKeysToCamelCase(data[key]);
+		if (isObject(data[key]) || isArray(data[key])) {
+			newData[camelCase(key)] = convertKeysToCamelCase(data[key]);
 		} else {
-			newData[_.camelCase(key)] = data[key];
+			newData[camelCase(key)] = data[key];
 		}
 	});
 
 	return newData;
-};var convertKeysToSnakeCase = function (data) {
-	if (lodash.isArray(data)) {
+};var isArray$1 = function (arg) { return Array.isArray(arg); };
+
+var convertKeysToSnakeCase = function (data) {
+	if (isArray$1(data)) {
 		return data.map(function (element) {
-			if (lodash.isObject(element) || lodash.isArray(element)) {
+			if (isObject(element) || isArray$1(element)) {
 				return convertKeysToSnakeCase(element);
 			}
 			return element;
@@ -28,10 +32,10 @@
 	}
 	var newData = {};
 	Object.keys(data).forEach(function (key) {
-		if (lodash.isObject(data[key]) || lodash.isArray(data[key])) {
-			newData[lodash.snakeCase(key)] = convertKeysToSnakeCase(data[key]);
+		if (isObject(data[key]) || isArray$1(data[key])) {
+			newData[snakeCase(key)] = convertKeysToSnakeCase(data[key]);
 		} else {
-			newData[lodash.snakeCase(key)] = data[key];
+			newData[snakeCase(key)] = data[key];
 		}
 	});
 
@@ -39,7 +43,7 @@
 };function getFirstErrorMessage(response, fallbackMsg) {
 	if ( fallbackMsg === void 0 ) fallbackMsg = 'Não conseguimos processar sua requisição. Tente novamente.';
 
-	var errors = lodash.get(response, 'errors', false);
+	var errors = get(response, 'errors', false);
 	if (!errors) { return fallbackMsg; }
 	var ref = Object.keys(errors);
 	var firstKey = ref[0];
@@ -65,7 +69,7 @@ var script = {
 	props: {
 		service: {
 			type: Function,
-			default: function () { return ({}); },
+			required: true,
 		},
 		payload: {
 			type: Object,
@@ -89,9 +93,11 @@ var script = {
 		},
 		errorFeedbackResolver: {
 			type: Function,
+			default: null,
 		},
 		successFeedbackResolver: {
 			type: Function,
+			default: null,
 		},
 		showSuccessFeedback: {
 			type: Boolean,
@@ -145,7 +151,9 @@ var script = {
 			var payload = payloadFromArgs || this.payload;
 			this.service(this.payloadResolver(payload))
 				.then(
-					function (data) {
+					function (ref) {
+						var data = ref.data;
+
 						this$1.data = this$1.dataResolver(data);
 						this$1.$emit('success', this$1.data);
 
@@ -171,11 +179,6 @@ var script = {
 								get(error, 'response.data', null),
 								'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.'
 							);
-
-							if (this$1.errorFeedback) {
-								this$1.errorFeedback(this$1);
-								return;
-							}
 
 							if (this$1.errorFeedbackResolver) {
 								this$1.errorFeedbackResolver({ vm: this$1, error: error, errorMessage: errorMessage });
@@ -314,7 +317,7 @@ var __vue_script__ = script;
   /* scoped */
   var __vue_scope_id__ = undefined;
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-8619f05c";
+  var __vue_module_identifier__ = "data-v-5a8d2084";
   /* functional template */
   var __vue_is_functional_template__ = undefined;
   /* style inject */
@@ -336,17 +339,52 @@ var __vue_script__ = script;
     undefined,
     undefined,
     undefined
-  );var components=/*#__PURE__*/Object.freeze({__proto__:null,RequestProvider: __vue_component__});// install function executed by Vue.use()
+  );var components=/*#__PURE__*/Object.freeze({__proto__:null,RequestProvider: __vue_component__});function removeAccents(str) {
+	if ( str === void 0 ) str = '';
+
+	var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+	var accentsOut = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+	var strLen = str.length;
+	var newStr = str.split('');
+	var x;
+
+	for (var i = 0; i < strLen; i += 1) {
+		x = accents.indexOf(str[i]);
+		if (x !== -1) {
+			newStr[i] = accentsOut[x];
+		}
+	}
+
+	newStr = newStr.join('');
+	newStr = newStr.split('.').join('');
+	newStr = newStr.split('-').join('');
+	newStr = newStr.split('/').join('');
+
+	return newStr;
+}function generateKey(length) {
+	if ( length === void 0 ) length = 8;
+
+	var result = '';
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i += 1) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+}// install function executed by Vue.use()
 function install(Vue) {
 	if (install.installed) { return; }
 
 	install.installed = true;
 
-	Object.defineProperty(Vue.prototype, '_', { value: _ });
+	Vue.prototype.$showConvertKeysToCamelCase = convertKeysToCamelCase;
+	Vue.prototype.$showConvertKeysToSnakeCase = convertKeysToSnakeCase;
+	Vue.prototype.$showRemoveAccents = removeAccents;
+	Vue.prototype.$showGenerateKey = generateKey;
 
 	Object.keys(components).forEach(function (componentName) {
 		Vue.component(
-			("show-" + (componentName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase())),
+			("Show" + componentName),
 			components[componentName]
 		);
 	});
