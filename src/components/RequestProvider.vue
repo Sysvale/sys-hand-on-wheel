@@ -26,7 +26,7 @@ export default {
 	props: {
 		service: {
 			type: Function,
-			default: () => ({}),
+			required: true,
 		},
 		payload: {
 			type: Object,
@@ -50,9 +50,11 @@ export default {
 		},
 		errorFeedbackResolver: {
 			type: Function,
+			default: null,
 		},
 		successFeedbackResolver: {
 			type: Function,
+			default: null,
 		},
 		showSuccessFeedback: {
 			type: Boolean,
@@ -132,11 +134,6 @@ export default {
 								get(error, 'response.data', null),
 								'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.',
 							);
-
-							if (this.errorFeedback) {
-								this.errorFeedback(this);
-								return;
-							}
 
 							if (this.errorFeedbackResolver) {
 								this.errorFeedbackResolver({ vm: this, error, errorMessage });
