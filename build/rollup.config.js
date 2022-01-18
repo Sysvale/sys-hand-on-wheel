@@ -51,6 +51,11 @@ const external = [
 const globals = {
 	// Provide global variable names to replace your external imports
 	// eg. jquery: '$'
+	sweetalert2: 'swal',
+	'lodash.get': 'get',
+	'lodash.camelcase': 'camelCase',
+	'lodash.isobject': 'isObject',
+	'lodash.snakecase': 'snakeCase',
 };
 
 // Customize configs for individual targets
