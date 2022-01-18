@@ -1,125 +1,134 @@
 {
-	"name": "@sysvale/show",
-	"version": "0.0.1",
-	"description": "A set of components used at Sysvale",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Sysvale/show"
-	},
-	"main": "dist/@sysvale/show.ssr.js",
-	"module": "dist/@sysvale/show.esm.js",
-	"unpkg": "dist/@sysvale/show.min.js",
-	"files": [
-		"dist/*"
-	],
-	"scripts": {
-		"serve": "vue-cli-service serve",
-		"test:unit": "vue-cli-service test:unit",
-		"test": "jest",
-		"lint": "vue-cli-service lint",
-		"storybook": "start-storybook -p 6006 --docs",
-		"build-storybook": "build-storybook -s public --docs",
-		"build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
-		"build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
-		"build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
-		"build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
-		"chromatic": "npx chromatic --project-token=a0f13ffc7d61"
-	},
-	"dependencies": {
-		"lodash.get": "^4.4.2",
-		"sweetalert2": "^11.3.5",
-		"vue": "^2.6.12"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.11.6",
-		"@rollup/plugin-alias": "^2.2.0",
-		"@rollup/plugin-buble": "^0.20.0",
-		"@rollup/plugin-replace": "^2.3.0",
-		"@storybook/addon-actions": "^6.1.0-alpha.10",
-		"@storybook/addon-essentials": "^6.1.0-alpha.10",
-		"@storybook/addon-links": "^6.1.0-alpha.10",
-		"@storybook/preset-scss": "^1.0.2",
-		"@storybook/vue": "^6.1.0-alpha.10",
-		"@vue/cli-plugin-babel": "~4.5.0",
-		"@vue/cli-plugin-eslint": "~4.5.0",
-		"@vue/cli-plugin-unit-jest": "~4.5.0",
-		"@vue/cli-service": "~4.5.0",
-		"@vue/eslint-config-airbnb": "^5.0.2",
-		"@vue/test-utils": "^1.1.0",
-		"babel-eslint": "^10.1.0",
-		"babel-loader": "^8.1.0",
-		"chromatic": "^6.0.4",
-		"cross-env": "^6.0.3",
-		"css-loader": "^4.3.0",
-		"eslint": "^6.7.2",
-		"eslint-plugin-import": "^2.20.2",
-		"eslint-plugin-vue": "^6.2.2",
-		"highlight.js": "^10.6.0",
-		"react-is": "^16.13.1",
-		"rollup": "^1.29.0",
-		"rollup-plugin-commonjs": "^10.1.0",
-		"rollup-plugin-terser": "^5.2.0",
-		"rollup-plugin-vue": "5.1.1",
-		"vue-hljs": "^2.0.0",
-		"vue-template-compiler": "^2.6.11"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true
-		},
-		"extends": [
-			"plugin:vue/essential",
-			"@vue/airbnb"
-		],
-		"parserOptions": {
-			"parser": "babel-eslint"
-		},
-		"rules": {
-			"vue/html-indent": [
-				"error",
-				"tab",
-				{
-					"attribute": 1,
-					"closeBracket": 0,
-					"alignAttributesVertically": true,
-					"ignores": []
-				}
-			],
-			"no-tabs": "off",
-			"indent": [
-				"error",
-				"tab",
-				{
-					"SwitchCase": 1
-				}
-			],
-			"quotes": [
-				"error",
-				"single",
-				{
-					"allowTemplateLiterals": true
-				}
-			]
-		},
-		"overrides": [
-			{
-				"files": [
-					"**/__tests__/*.{j,t}s?(x)",
-					"**/tests/unit/**/*.spec.{j,t}s?(x)"
-				],
-				"env": {
-					"jest": true
-				}
-			}
-		]
-	},
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"not dead"
-	],
-	"jest": {
-		"preset": "@vue/cli-plugin-unit-jest"
-	}
+  "name": "@sysvale/show",
+  "version": "0.0.2",
+  "description": "A set of components used at Sysvale",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sysvale/show.git"
+  },
+  "main": "dist/@sysvale/show.ssr.js",
+  "module": "dist/@sysvale/show.esm.js",
+  "unpkg": "dist/@sysvale/show.min.js",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "test:unit": "vue-cli-service test:unit",
+    "test": "jest",
+    "lint": "vue-cli-service lint",
+    "storybook": "start-storybook -p 6006 --docs",
+    "build-storybook": "build-storybook -s public --docs",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "chromatic": "npx chromatic --project-token=a0f13ffc7d61"
+  },
+  "dependencies": {
+    "lodash.camelcase": "^4.3.0",
+    "lodash.get": "^4.4.2",
+    "lodash.isobject": "^3.0.2",
+    "lodash.snakecase": "^4.1.1",
+    "sweetalert2": "^11.3.5",
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@rollup/plugin-alias": "^2.2.0",
+    "@rollup/plugin-buble": "^0.20.0",
+    "@rollup/plugin-replace": "^2.3.0",
+    "@storybook/addon-actions": "^6.1.0-alpha.10",
+    "@storybook/addon-essentials": "^6.1.0-alpha.10",
+    "@storybook/addon-links": "^6.1.0-alpha.10",
+    "@storybook/preset-scss": "^1.0.2",
+    "@storybook/vue": "^6.1.0-alpha.10",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/test-utils": "^1.1.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "chromatic": "^6.0.4",
+    "cross-env": "^6.0.3",
+    "css-loader": "^4.3.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "highlight.js": "^10.6.0",
+    "react-is": "^16.13.1",
+    "rollup": "^1.29.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-vue": "5.1.1",
+    "vue-hljs": "^2.0.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/airbnb"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "vue/html-indent": [
+        "error",
+        "tab",
+        {
+          "attribute": 1,
+          "closeBracket": 0,
+          "alignAttributesVertically": true,
+          "ignores": []
+        }
+      ],
+      "no-tabs": "off",
+      "indent": [
+        "error",
+        "tab",
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "quotes": [
+        "error",
+        "single",
+        {
+          "allowTemplateLiterals": true
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest"
+  },
+  "bugs": {
+    "url": "https://github.com/Sysvale/show/issues"
+  },
+  "homepage": "https://github.com/Sysvale/show#readme",
+  "author": "Sysvale",
+  "license": "MIT"
 }
