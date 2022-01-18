@@ -1,4 +1,7 @@
-import { isArray, isObject, snakeCase } from 'lodash';
+import isObject from 'lodash.isobject';
+import snakeCase from 'lodash.snakecase';
+
+const isArray = (arg) => Array.isArray(arg);
 
 const convertKeysToSnakeCase = (data) => {
 	if (isArray(data)) {

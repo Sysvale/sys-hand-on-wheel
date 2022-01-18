@@ -1,7 +1,12 @@
+import camelCase from 'lodash.camelcase';
+import isObject from 'lodash.isobject';
+
+const isArray = (arg) => Array.isArray(arg);
+
 const convertKeysToCamelCase = (data) => {
-	if (_.isArray(data)) {
+	if (isArray(data)) {
 		return data.map((element) => {
-			if (_.isObject(element) || _.isArray(element)) {
+			if (isObject(element) || isArray(element)) {
 				return convertKeysToCamelCase(element);
 			}
 			return element;
@@ -9,10 +14,10 @@ const convertKeysToCamelCase = (data) => {
 	}
 	const newData = {};
 	Object.keys(data).forEach((key) => {
-		if (_.isObject(data[key]) || _.isArray(data[key])) {
-			newData[_.camelCase(key)] = convertKeysToCamelCase(data[key]);
+		if (isObject(data[key]) || isArray(data[key])) {
+			newData[camelCase(key)] = convertKeysToCamelCase(data[key]);
 		} else {
-			newData[_.camelCase(key)] = data[key];
+			newData[camelCase(key)] = data[key];
 		}
 	});
 
