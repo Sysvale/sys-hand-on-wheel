@@ -10,7 +10,7 @@ function install(Vue) {
 
 	Object.keys(components).forEach((componentName) => {
 		Vue.component(
-			`show-${componentName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()}`,
+			`Show${componentName}`,
 			components[componentName],
 		);
 	});
