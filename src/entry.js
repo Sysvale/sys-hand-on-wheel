@@ -1,4 +1,10 @@
 import * as components from './components/index';
+import {
+	convertKeysToCamelCase,
+	convertKeysToSnakeCase,
+	removeAccents,
+	generateKey,
+} from './utils';
 
 // install function executed by Vue.use()
 function install(Vue) {
@@ -6,7 +12,10 @@ function install(Vue) {
 
 	install.installed = true;
 
-	Object.defineProperty(Vue.prototype, '_', { value: _ });
+	Vue.prototype.$showConvertKeysToCamelCase = convertKeysToCamelCase;
+	Vue.prototype.$showConvertKeysToSnakeCase = convertKeysToSnakeCase;
+	Vue.prototype.$showRemoveAccents = removeAccents;
+	Vue.prototype.$showGenerateKey = generateKey;
 
 	Object.keys(components).forEach((componentName) => {
 		Vue.component(
