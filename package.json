@@ -57,8 +57,10 @@
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
+    "flush-promises": "^1.0.2",
     "highlight.js": "^10.6.0",
     "react-is": "^16.13.1",
+    "regenerator-runtime": "^0.13.9",
     "rollup": "^1.29.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-terser": "^5.2.0",
@@ -123,7 +125,19 @@
     "not dead"
   ],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest"
+    "preset": "@vue/cli-plugin-unit-jest",
+    "transform": {
+      ".*\\.(js)$": "babel-jest"
+    },
+    "setupFilesAfterEnv": ["./src/utils/setupTests.js"],
+    "collectCoverage": true,
+    "collectCoverageFrom": ["src/**/*.vue"],
+    "coverageReporters": ["lcov", "text"]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "bugs": {
     "url": "https://github.com/Sysvale/show/issues"
