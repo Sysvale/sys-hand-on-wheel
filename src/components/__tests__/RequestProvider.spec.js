@@ -22,12 +22,13 @@ const payloadResolverMock = jest.fn((payload) => convertKeysToCamelCase(payload)
 const dataResolverMock = jest.fn((data) => convertKeysToSnakeCase(data));
 const successFeedbackResolverMock = jest.fn();
 const errorFeedbackResolverMock = jest.fn();
+const defaultComponent = '<div />';
 
 test('Component renders correctly', async () => {
 	const wrapper = mount(RequestProvider, {
 		localVue,
 		slots: {
-			default: '<div />',
+			default: defaultComponent,
 		},
 		propsData: {
 			service: successfulServiceMock,
@@ -45,7 +46,7 @@ describe('Service', () => {
 		mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -60,7 +61,7 @@ describe('Service', () => {
 		mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -78,7 +79,7 @@ describe('Service', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -100,7 +101,7 @@ describe('Event', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -117,7 +118,7 @@ describe('Event', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: failedServiceMock,
@@ -136,7 +137,7 @@ describe('Resolvers', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -166,7 +167,7 @@ describe('Resolvers', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -193,7 +194,7 @@ describe('Resolvers', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: successfulServiceMock,
@@ -220,7 +221,7 @@ describe('Resolvers', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: failedServiceMock,
@@ -247,7 +248,7 @@ describe('Resolvers', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: failedServiceMock,
@@ -275,7 +276,7 @@ describe('Error state', () => {
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
-				default: '<div />',
+				default: defaultComponent,
 			},
 			propsData: {
 				service: failedServiceMock,
@@ -296,5 +297,29 @@ describe('Error state', () => {
 		await flushPromises();
 
 		expect(wrapper.vm.error).toBeFalsy();
+	});
+});
+
+describe('Label', () => {
+	test('changes correctly during request loading', async () => {
+		expect.assertions(2);
+
+		const wrapper = mount(RequestProvider, {
+			localVue,
+			slots: {
+				default: defaultComponent,
+			},
+			propsData: {
+				service: failedServiceMock,
+				payload: payloadMock,
+				immediate: true,
+			},
+		});
+
+		expect(wrapper.vm.labelHelper('test label')).toBe('Carregando...');
+
+		await flushPromises();
+
+		expect(wrapper.vm.labelHelper('test label')).toBe('test label');
 	});
 });
