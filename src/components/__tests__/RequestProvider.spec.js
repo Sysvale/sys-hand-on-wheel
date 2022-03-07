@@ -1,24 +1,24 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
-import convertKeysToCamelCase from '../../utils/convertKeysToCamelCase';
 import convertKeysToSnakeCase from '../../utils/convertKeysToSnakeCase';
 import RequestProvider from '../RequestProvider.vue';
 
 const localVue = createLocalVue();
 
 const responseDataMock = {
-	message: 'success message',
+	'test message': 'success message',
 };
 
 const payloadMock = {
 	id: '1',
+	'test--value': 'test value',
 };
 
 const successfulServiceMock = jest.fn(() => Promise.resolve({
 	data: responseDataMock,
 }));
 const failedServiceMock = jest.fn(() => Promise.reject(Error('test error')));
-const payloadResolverMock = jest.fn((payload) => convertKeysToCamelCase(payload));
+const payloadResolverMock = jest.fn();
 const dataResolverMock = jest.fn((data) => convertKeysToSnakeCase(data));
 const successFeedbackResolverMock = jest.fn();
 const errorFeedbackResolverMock = jest.fn();
@@ -92,7 +92,7 @@ describe('Service', () => {
 
 		await flushPromises();
 
-		expect(successfulServiceMock).toHaveBeenCalledWith(payloadMock);
+		expect(successfulServiceMock).toHaveBeenCalledWith(dataResolverMock(payloadMock));
 	});
 });
 
@@ -134,6 +134,7 @@ describe('Event', () => {
 
 describe('Resolvers', () => {
 	test('have their results applied correctly to payload and data', async () => {
+		expect.assertions(3);
 		const wrapper = mount(RequestProvider, {
 			localVue,
 			slots: {
@@ -152,8 +153,6 @@ describe('Resolvers', () => {
 		expect(payloadResolverMock).toHaveBeenCalledWith(payloadMock);
 
 		await flushPromises();
-
-		expect(wrapper.vm.payload).toStrictEqual(convertKeysToCamelCase(payloadMock));
 
 		expect(dataResolverMock).toHaveBeenCalledWith(responseDataMock);
 
