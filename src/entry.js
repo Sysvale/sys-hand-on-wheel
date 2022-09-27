@@ -6,19 +6,36 @@ import {
 	generateKey,
 } from './utils';
 
+const utils = {
+	$showConvertKeysToCamelCase: convertKeysToCamelCase,
+	$showConvertKeysToSnakeCase: convertKeysToSnakeCase,
+	$showRemoveAccents: removeAccents,
+	$showGenerateKey: generateKey,
+};
+
 // install function executed by Vue.use()
-function install(Vue) {
+function install(app) {
 	if (install.installed) return;
 
 	install.installed = true;
 
-	Vue.prototype.$showConvertKeysToCamelCase = convertKeysToCamelCase;
-	Vue.prototype.$showConvertKeysToSnakeCase = convertKeysToSnakeCase;
-	Vue.prototype.$showRemoveAccents = removeAccents;
-	Vue.prototype.$showGenerateKey = generateKey;
+	const version = Number(app.version.split('.')[0]);
+
+	if (version <= 2) {
+		Object.keys(utils).forEach((key) => {
+			app.prototype[key] = utils[key];
+		});
+	}
+
+	if (version > 2) {
+		// ficará disponível apenas com o uso do Options API
+		Object.keys(utils).forEach((key) => {
+			app.config.globalProperties[key] = utils[key];
+		});
+	}
 
 	Object.keys(components).forEach((componentName) => {
-		Vue.component(
+		app.component(
 			`Show${componentName}`,
 			components[componentName],
 		);
