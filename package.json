@@ -1,6 +1,6 @@
 {
   "name": "@sysvale/show",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A set of components used at Sysvale",
   "repository": {
     "type": "git",
@@ -129,10 +129,17 @@
     "transform": {
       ".*\\.(js)$": "babel-jest"
     },
-    "setupFilesAfterEnv": ["./src/utils/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "./src/utils/setupTests.js"
+    ],
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.vue"],
-    "coverageReporters": ["lcov", "text"]
+    "collectCoverageFrom": [
+      "src/**/*.vue"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ]
   },
   "babel": {
     "presets": [
