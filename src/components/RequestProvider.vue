@@ -174,7 +174,7 @@ export default {
 	},
 
 	render() {
-		const slotProvider = this.$scopedSlots || this.$slots;
+		const slotProvider = this.$slots || this.$scopedSlots;
 		const slot = slotProvider.default({
 			loading: this.loading,
 			failed: this.failed,
