@@ -42,3 +42,5 @@ Vue.use(SHOW);
   </div>
 </show-request-provider>
 ```
+
+**Para saber mais sobre a utilização do SHOW, consulte a [Wiki](https://github.com/Sysvale/sys-hand-on-wheel/wiki)**.
