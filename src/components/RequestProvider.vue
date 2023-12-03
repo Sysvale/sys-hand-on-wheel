@@ -81,6 +81,7 @@ export default {
 		return {
 			loading: false,
 			failed: false,
+			succeeded: false,
 			error: null,
 			data: this.initialData,
 		};
@@ -108,6 +109,7 @@ export default {
 				.then(
 					({ data }) => {
 						this.data = this.dataResolver(data);
+						this.succeeded = true;
 						this.$emit('success', this.data);
 
 						if (this.showSuccessFeedback) {
@@ -169,6 +171,7 @@ export default {
 		startRequest() {
 			this.loading = true;
 			this.failed = false;
+			this.succeeded = false;
 			this.error = null;
 		},
 	},
@@ -178,6 +181,7 @@ export default {
 		const slot = slotProvider.default({
 			loading: this.loading,
 			failed: this.failed,
+			succeeded: this.succeeded,
 			error: this.error,
 			data: this.data,
 			action: this.action,
