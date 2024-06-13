@@ -22,9 +22,7 @@ function install(app) {
 	const version = Number(app.version.split('.')[0]);
 
 	if (version <= 2) {
-		Object.keys(utils).forEach((key) => {
-			app.prototype[key] = utils[key];
-		});
+		throw new Error('Essa versão só é compatível com projetos que possuem o Vue 3. Para projetos com a Vue 2, utilize a versão 0.3.0 ou inferior');
 	}
 
 	if (version > 2) {

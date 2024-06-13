@@ -23,13 +23,19 @@ const dataResolverMock = jest.fn((data) => convertKeysToSnakeCase(data));
 const successFeedbackResolverMock = jest.fn();
 const errorFeedbackResolverMock = jest.fn();
 const defaultComponent = '<div />';
+const componentDefaultSettings = {
+	localVue,
+	slots: {
+		default: defaultComponent,
+	},
+	provide: {
+		$_requestObserver: null,
+	},
+}
 
 test('Component renders correctly', async () => {
 	const wrapper = mount(RequestProvider, {
-		localVue,
-		slots: {
-			default: defaultComponent,
-		},
+		...componentDefaultSettings,
 		propsData: {
 			service: successfulServiceMock,
 		},
@@ -44,10 +50,7 @@ describe('Service', () => {
 	test('is called on mount if immediate is true', async () => {
 		expect.assertions(2);
 		mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 				immediate: false,
@@ -59,10 +62,7 @@ describe('Service', () => {
 		expect(successfulServiceMock).not.toHaveBeenCalled();
 
 		mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 				immediate: true,
@@ -77,10 +77,7 @@ describe('Service', () => {
 	test('is called correctly when action is triggered manually', async () => {
 		expect.assertions(1);
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 			},
@@ -99,10 +96,7 @@ describe('Service', () => {
 describe('Event', () => {
 	test('is emitted correctly when a request has succeeded', async () => {
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 				immediate: true,
@@ -116,10 +110,7 @@ describe('Event', () => {
 
 	test('is emitted correctly when a request has failed', async () => {
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: failedServiceMock,
 				immediate: true,
@@ -136,10 +127,7 @@ describe('Resolvers', () => {
 	test('have their results applied correctly to payload and data', async () => {
 		expect.assertions(3);
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 				payloadResolver: payloadResolverMock,
@@ -164,10 +152,7 @@ describe('Resolvers', () => {
 	test('are called correctly when a request has succeeded and showSuccessFeedback is false', async () => {
 		expect.assertions(4);
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 				payloadResolver: payloadResolverMock,
@@ -191,10 +176,7 @@ describe('Resolvers', () => {
 	test('are called correctly when a request has succeeded and showSuccessFeedback is true', async () => {
 		expect.assertions(4);
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: successfulServiceMock,
 				payloadResolver: payloadResolverMock,
@@ -218,10 +200,7 @@ describe('Resolvers', () => {
 	test('are called correctly when a request has failed and hideErrorFeedback is true', async () => {
 		expect.assertions(4);
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: failedServiceMock,
 				payloadResolver: payloadResolverMock,
@@ -245,10 +224,7 @@ describe('Resolvers', () => {
 	test('are called correctly when a request has failed and hideErrorFeedback is false', async () => {
 		expect.assertions(4);
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: failedServiceMock,
 				payloadResolver: payloadResolverMock,
@@ -273,10 +249,7 @@ describe('Resolvers', () => {
 describe('Error state', () => {
 	test('is reset after forceResetError is set to true', async () => {
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: failedServiceMock,
 				payload: payloadMock,
@@ -304,10 +277,7 @@ describe('Label', () => {
 		expect.assertions(2);
 
 		const wrapper = mount(RequestProvider, {
-			localVue,
-			slots: {
-				default: defaultComponent,
-			},
+			...componentDefaultSettings,
 			propsData: {
 				service: failedServiceMock,
 				payload: payloadMock,
@@ -315,10 +285,10 @@ describe('Label', () => {
 			},
 		});
 
-		expect(wrapper.vm.labelHelper('test label')).toBe('Carregando...');
+		expect(wrapper.vm.loadingTextResolver('test label')).toBe('Carregando...');
 
 		await flushPromises();
 
-		expect(wrapper.vm.labelHelper('test label')).toBe('test label');
+		expect(wrapper.vm.loadingTextResolver('test label')).toBe('test label');
 	});
 });

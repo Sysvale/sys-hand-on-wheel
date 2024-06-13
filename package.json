@@ -1,6 +1,6 @@
 {
   "name": "@sysvale/show",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A set of components used at Sysvale",
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "lodash.camelcase": "^4.3.0",
     "lodash.get": "^4.4.2",
     "lodash.isobject": "^3.0.2",
+    "lodash.keyby": "^4.6.0",
     "lodash.snakecase": "^4.1.1",
     "sweetalert2": "^11.3.5",
     "vue": "^2.6.12"

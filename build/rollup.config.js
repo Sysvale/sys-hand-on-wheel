@@ -56,6 +56,7 @@ const globals = {
 	'lodash.camelcase': 'camelCase',
 	'lodash.isobject': 'isObject',
 	'lodash.snakecase': 'snakeCase',
+	'lodash.keyby': 'keyBy',
 };
 
 // Customize configs for individual targets
