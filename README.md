@@ -1,4 +1,7 @@
 ![SHOW logo](/assets/show-logo.webp)
+
+Atenção: Se deseja utilizar o SHOW em projetos com Vue 2, utilize a versão `0.3.0` ou inferior.
+
 ## Instalando
 
 - O SHOW pode ser instalado com o npm:
