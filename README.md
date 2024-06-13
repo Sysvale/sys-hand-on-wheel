@@ -1,3 +1,4 @@
+![SHOW logo](/assets/show-logo.webp)
 ## Instalando
 
 - O SHOW pode ser instalado com o npm:
