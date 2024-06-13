@@ -161,7 +161,7 @@ export default {
 				});
 		},
 
-		labelHelper(label, loadingLabel = 'Carregando...') {
+		loadingTextResolver(label, loadingLabel = 'Carregando...') {
 			if (this.loading) {
 				return loadingLabel;
 			}
@@ -185,7 +185,7 @@ export default {
 			error: this.error,
 			data: this.data,
 			action: this.action,
-			labelHelper: this.labelHelper,
+			loadingTextResolver: this.loadingTextResolver,
 			errorMessage: getFirstErrorMessage(
 				get(this.error, 'response.data', null),
 				'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.',
