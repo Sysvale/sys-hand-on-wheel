@@ -192,7 +192,7 @@ export default {
 			),
 		});
 
-		return Array.isArray(slot) ? slot[0] : slot;
+		return h(this.tag, slot);
 	},
 };
 </script>
