@@ -1,8 +1,10 @@
 <script>
+import { h } from 'vue';
 import swal from 'sweetalert2';
 import get from 'lodash.get';
 import convertKeysToCamelCase from '../utils/convertKeysToCamelCase';
 import convertKeysToSnakeCase from '../utils/convertKeysToSnakeCase';
+import generateKey from '../utils/generateKey';
 import getFirstErrorMessage from '../utils/getFirstErrorMessage';
 
 const SUCCESS_SWAL_DEFAULT_CONFIG = {
@@ -23,7 +25,17 @@ const ERROR_SWAL_DEFAULT_CONFIG = {
 };
 
 export default {
+	inject: ['$_requestObserver'],
+	emits: ['success', 'error', 'success-feedback-ok', 'error-feedback-ok', 'success-feedback-cancel', 'error-feedback-cancel'],
 	props: {
+		vid: {
+			type: String,
+			default: () => generateKey(),
+		},
+		tag: {
+			type: String,
+			default: 'div',
+		},
 		service: {
 			type: Function,
 			required: true,
@@ -87,6 +99,18 @@ export default {
 		};
 	},
 
+	computed: {
+		requestState() {
+			return {
+				loading: this.loading,
+				failed: this.failed,
+				succeeded: this.succeeded,
+				error: this.error,
+				data: this.data,
+			};
+		}
+	},
+
 	watch: {
 		forceResetError(newValue) {
 			if (newValue) {
@@ -98,6 +122,18 @@ export default {
 	mounted() {
 		if (this.immediate) {
 			this.action();
+		}
+	},
+
+	created() {
+		if(this.$_requestObserver) {
+			this.$_requestObserver.subscribe(this);
+		}
+	},
+
+	beforeDestroy() {
+		if(this.$_requestObserver) {
+			this.$_requestObserver.unsubscribe(this);
 		}
 	},
 
@@ -177,13 +213,9 @@ export default {
 	},
 
 	render() {
-		const slotProvider = this.$slots || this.$scopedSlots;
+		const slotProvider = this.$slots;
 		const slot = slotProvider.default({
-			loading: this.loading,
-			failed: this.failed,
-			succeeded: this.succeeded,
-			error: this.error,
-			data: this.data,
+			...this.requestState,
 			action: this.action,
 			loadingTextResolver: this.loadingTextResolver,
 			errorMessage: getFirstErrorMessage(
