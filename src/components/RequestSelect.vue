@@ -53,7 +53,7 @@ export default {
 				hideErrorFeedback: true,
 			}),
 		},
-		dependencyPayload : {
+		dependencyPayload: {
 			type: Object,
 			default: () => ({}),
 		},
@@ -167,6 +167,6 @@ export default {
 				};
 			});
 		},
-	}
-}
+	},
+};
 </script>
