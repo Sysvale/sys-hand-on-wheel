@@ -10,6 +10,7 @@ import {
     convertKeysToSnakeCase,
     removeAccents,
     generateKey,
+    toThousands,
 } from '../utils';
 /* -------*/
 
@@ -26,6 +27,7 @@ export default {
             $showConvertKeysToSnakeCase: convertKeysToSnakeCase,
             $showRemoveAccents: removeAccents,
             $showGenerateKey: generateKey,
+            $showToThousands: toThousands,
         };
         const version = Number(app.version.split('.')[0]);
     
