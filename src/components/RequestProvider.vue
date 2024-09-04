@@ -165,6 +165,7 @@ export default {
 					(error) => {
 						this.failed = true;
 						this.error = error;
+						console.error(error);
 						this.$emit('error', error);
 
 						if (!this.hideErrorFeedback) {
