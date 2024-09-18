@@ -87,6 +87,10 @@ export default {
 		initialData: {
 			default: null,
 		},
+		renderless: {
+			type: Boolean,
+			default: false,
+		}
 	},
 
 	data() {
@@ -224,6 +228,10 @@ export default {
 				'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.',
 			),
 		});
+
+		if (this.renderless) {
+			return slot;
+		}
 
 		return h(this.tag, slot);
 	},
