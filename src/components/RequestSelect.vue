@@ -12,6 +12,7 @@
 			v-bind="selectAttrs"
 			v-model="internalSelected"
 			:disabled="shouldBeDisabled(loading)"
+			:options-field="computedKeyToValue"
 			:options="computedOptions"
 			:placeholder="computedPlaceholder(loadingTextResolver)"
 		/>
@@ -139,7 +140,7 @@ export default {
 			deep: true,
 		},
 
-		options(newValue) {
+		computedOptions(newValue) {
 			let selectedOption = {};
 			if (this.modelValue instanceof Object) {
 				[selectedOption] = newValue.filter((option) => option[this.keyToId] === this.modelValue[this.keyToId]);
