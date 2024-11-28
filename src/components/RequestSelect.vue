@@ -47,6 +47,10 @@ export default {
 			type: Function,
 			default: (item) => item,
 		},
+		responseResolver: {
+			type: Function,
+			default: (item) => item,
+		},
 		requestProviderOptions: {
 			type: Object,
 			default: () => ({
@@ -154,7 +158,7 @@ export default {
 
 	methods: {
 		handleSuccess(data = []) {
-			this.options = data.map((item) => {
+			this.options = this.responseResolver(data).map((item) => {
 				if(item instanceof Object) {
 					return {
 						...item,
