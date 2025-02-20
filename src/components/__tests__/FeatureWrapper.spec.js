@@ -32,7 +32,7 @@ describe('FeatureWrapper', () => {
 	test('is disabled when feature is disabled and mode is disable', async () => {
 		const wrapper = mount(FeatureWrapper, {
 			slots: {
-				default: '<div> Test feature {{ disabled }} </div>',
+				default: '<div> Test feature is disabled: {{ params.disabled }} </div>',
 			},
 			global: {
 				provide: {
@@ -45,8 +45,24 @@ describe('FeatureWrapper', () => {
 			},
 		});
 
-		console.log(wrapper.html());
+		expect(wrapper.text()).toBe('Test feature is disabled: true');
+	});
 
-		// expect(wrapper.text()).toBe(defaultComponent);
+	test('overlay is shown when feature is disabled and mode is overlay', async () => {
+		const wrapper = mount(FeatureWrapper, {
+			...componentDefaultSettings,
+			global: {
+				provide: {
+					disabledFeatures: ['test-feature'],
+				},
+			},
+			props: {
+				feature: 'test-feature',
+				mode: 'overlay',
+			},
+		});
+
+		console.log(wrapper.html());
+		// expect(wrapper.text()).toBe('Test feature is disabled: true');
 	});
 });
