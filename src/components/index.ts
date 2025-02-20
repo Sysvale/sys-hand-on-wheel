@@ -2,6 +2,7 @@
 import RequestProvider from './RequestProvider.vue';
 import RequestObserver from './RequestObserver.vue';
 import RequestSelect from './RequestSelect.vue';
+import FeatureWrapper from './FeatureWrapper.vue';
 /** -------*/
 
 /** Utils */
@@ -16,11 +17,15 @@ import {
 
 
 export default {
-    install(app: any) {
+    install(app: any, options: any) {
         app.component('ShowRequestProvider', RequestProvider);
         app.component('ShowRequestObserver', RequestObserver);
         app.component('ShowRequestSelect', RequestSelect);
-
+        app.component('ShowFeatureWrapper', FeatureWrapper);
+        
+        if (options && options.disabledFeatures) {
+            app.provide('disabledFeatures', options.disabledFeatures);
+        }
 
         const utils = {
             $showConvertKeysToCamelCase: convertKeysToCamelCase,
