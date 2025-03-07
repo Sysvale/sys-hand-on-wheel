@@ -46,8 +46,6 @@ describe('FeatureWrapper', () => {
 			},
 		});
 
-		console.log(wrapper.html());
-
 		expect(wrapper.text()).toBe('Component is disabled: true');
 	});
 });

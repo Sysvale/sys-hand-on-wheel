@@ -8,23 +8,30 @@
 		</slot>
 	</template>
 </template>
+<script>
+export default {
+	inject: ['disabledFeatures'],
 
-<script setup>
-import { computed, inject } from 'vue';
-
-const disabledFeatures = inject('disabledFeatures');
-
-const { feature, mode, blockMessage } = defineProps({
-	feature: {
-		type: String,
-		required: true,
+	props: {
+		feature: {
+			type: String,
+			required: true,
+		},
+		mode: {
+			type: String,
+			default: 'hide',
+			validator: (value) => ['hide', 'disable'].includes(value),
+		},
+		blockMessage: {
+			type: String,
+			default: 'Essa funcionalidade está desabilitada.',
+		},
 	},
-	mode: {
-		type: String,
-		default: 'hide',
-		validator: (value) => ['hide', 'disable', 'overlay'].includes(value),
-	},
-});
 
-const isDisabled = computed(() => disabledFeatures.includes(feature));
+	computed: {
+		isDisabled() {
+			return this.disabledFeatures.includes(this.feature);
+		},
+	},
+};
 </script>
