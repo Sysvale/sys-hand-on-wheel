@@ -25,14 +25,15 @@ describe('FeatureWrapper', () => {
 			},
 		});
 
-		console.log(wrapper.text());
+		console.log(wrapper.html());
+
 		expect(wrapper.text()).toBe('');
 	});
 
 	test('is disabled when feature is disabled and mode is disable', async () => {
 		const wrapper = mount(FeatureWrapper, {
 			slots: {
-				default: '<div> Test feature {{ disabled }} </div>',
+				default: '<div> Component is disabled: {{ disabled }} </div>',
 			},
 			global: {
 				provide: {
@@ -47,6 +48,6 @@ describe('FeatureWrapper', () => {
 
 		console.log(wrapper.html());
 
-		// expect(wrapper.text()).toBe(defaultComponent);
+		expect(wrapper.text()).toBe('Component is disabled: true');
 	});
 });
