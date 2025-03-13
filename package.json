@@ -25,6 +25,8 @@
 		"test": "vitest"
 	},
 	"dependencies": {
+		"@vee-validate/i18n": "^4.15.0",
+		"@vee-validate/rules": "^4.15.0",
 		"lodash.camelcase": "^4.3.0",
 		"lodash.get": "^4.4.2",
 		"lodash.isempty": "^4.4.0",
@@ -34,7 +36,8 @@
 		"lodash.reduce": "^4.6.0",
 		"lodash.snakecase": "^4.1.1",
 		"sweetalert2": "^11.3.5",
-		"vue": "^3.2.37"
+		"vee-validate": "^4.15.0",
+		"vue": "^3.5.13"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.10",
