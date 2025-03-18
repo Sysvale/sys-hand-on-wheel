@@ -17,6 +17,7 @@
 			>
 				<component
 					:is="step.component"
+					:step-values="model[step.id]"
 				/>
 			</Form>
 		</template>
@@ -151,10 +152,6 @@ const buildHeaders = () => {
 		insertHeader(step);
 		step = step.$nextStep();
 	}
-	console.log(step)
-	if(step?.$nextStep() === 'end') {
-		insertHeader(step);
-	}
 };
 
 const insertHeader = ({ label, id }) => headers.value.push({ label, id });
@@ -190,7 +187,7 @@ const calculateProgress = () => {
 			currentStepIndex = totalSteps;
 		}
 
-		if(step.$nextStep().id === 'end') break;
+		if(step.$nextStep()?.id === 'end') break;
 		step = step.$nextStep();
 	}
 
@@ -208,15 +205,17 @@ const handleNextStep = async () => {
 	if(state.valid) {
 		buildHeaders();
 		goToNextStep();
-		emit('next', currentStep);
-		if(isLastStep.value) {
-			emit('submit', model.value);
-		}
 	}
 }
 
 const goToNextStep = () => {
-	currentStepId.value = currentStep.value.$nextStep().id;
+	const nextStep = currentStep.value.$nextStep();
+	if(!nextStep) {
+		emit('submit', model.value);
+		return;
+	};
+	currentStepId.value = nextStep.id;
+	emit('next', nextStep);
 	headers.value.find((step) => step.id === currentStepId.value).inProcessing = true;
 }
   
