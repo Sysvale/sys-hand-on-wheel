@@ -5,6 +5,7 @@ import RequestSelect from './RequestSelect.vue';
 import FormWizard from './FormWizard.vue';
 import Form from './Form.vue';
 import Field from './Field.vue';
+import FeatureWrapper from './FeatureWrapper.vue';
 /** -------*/
 
 /** Utils */
@@ -22,9 +23,14 @@ import {
 export default {
     install(app: any, options = {
         veeValidateOptions: {},
+        disabledFeatures: [],
     }) {
-        const { veeValidateOptions } = options;
+        const { veeValidateOptions, disabledFeatures } = options;
         const veeValidateWrapper = setupVeeValidateWrapper(veeValidateOptions);
+
+        if (disabledFeatures.length > 0) {
+            app.provide('disabledFeatures', options.disabledFeatures);
+        }
 
         app.component('ShowRequestProvider', RequestProvider);
         app.component('ShowRequestObserver', RequestObserver);
@@ -32,6 +38,7 @@ export default {
         app.component('ShowForm', Form);
         app.component('ShowField', Field);
         app.component('ShowFormWizard', FormWizard);
+        app.component('ShowFeatureWrapper', FeatureWrapper);
 
 
         const utils = {
