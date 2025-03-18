@@ -28,6 +28,6 @@
     validateOnModelUpdate: {
       type: Boolean,
       default: true
-    }
+    },
   });
   </script>
