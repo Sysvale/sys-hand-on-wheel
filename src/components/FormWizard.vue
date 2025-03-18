@@ -74,7 +74,7 @@ const props = defineProps({
 	},
 });
 
-const emit = defineEmits(['next', 'previous']);
+const emit = defineEmits(['next', 'previous', 'submit']);
 
 const model = defineModel();
 const forms = ref({});
@@ -157,12 +157,10 @@ const buildHeaders = () => {
 const insertHeader = ({ label, id }) => headers.value.push({ label, id });
 
 const initializeValues = () => {
+	const output = {};
 	headers.value.forEach((header) => {
-		model.value = {
-			...model.value,
-			[header.id]: forms.value[header.id]?.values,
-		};
-
+		output[header.id] = forms.value[header.id]?.values || {};;
+		
 		validationState.value = {
 			...validationState.value,
 			[header.id]: {
@@ -171,6 +169,7 @@ const initializeValues = () => {
 			},
 		};
 	});
+	model.value = { ...output };
 }
   
 const calculateProgress = () => {
