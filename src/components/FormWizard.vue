@@ -44,7 +44,7 @@
   
 <script setup>
 import { Form } from 'vee-validate';
-import { ref, computed, watch, onMounted, defineEmits } from 'vue';
+import { ref, computed, watch, onMounted, defineEmits, provide } from 'vue';
 import keyBy from 'lodash.keyby';
 
 const props = defineProps({
@@ -75,6 +75,23 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['next', 'previous', 'submit']);
+
+provide('$resetField', (field, formId) => {
+	const stepId = formId || currentStepId.value;
+	if(
+		!forms.value[stepId]
+		|| !forms.value[stepId].resetField
+	) {
+		return;
+	}
+
+	forms.value[stepId].resetField(field);
+});
+
+provide('$setFieldValue', (field, value, formId) => {
+	const stepId = formId || currentStepId.value;
+	forms.value[stepId].setFieldValue(field, value);
+})
 
 const model = defineModel();
 const forms = ref({});
@@ -179,7 +196,6 @@ const calculateProgress = () => {
 
 	let step = stepMap.value[steps[0].id];
 	while(step) {
-		console.log('calculateProgress');
 		totalSteps++;
 
 		if (step.id === currentStepId.value) {
