@@ -98,7 +98,7 @@ provide('$getValues', (stepId = null) => {
 		return model.value;
 	}
 
-	return forms.value[stepId].getValues();
+	return forms.value?.[stepId]?.getValues() || {};
 });
 
 const model = defineModel();
