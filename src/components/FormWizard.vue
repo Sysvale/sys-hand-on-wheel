@@ -91,7 +91,7 @@ provide('$resetField', (field, formId) => {
 provide('$setFieldValue', (field, value, formId) => {
 	const stepId = formId || currentStepId.value;
 	forms.value[stepId].setFieldValue(field, value);
-})
+});
 
 const model = defineModel();
 const forms = ref({});
@@ -229,8 +229,9 @@ const goToNextStep = () => {
 		emit('submit', model.value);
 		return;
 	};
+	const previousStep = JSON.parse(JSON.stringify(currentStep.value));
 	currentStepId.value = nextStep.id;
-	emit('next', nextStep);
+	emit('next', { nextStep, previousStep });
 	headers.value.find((step) => step.id === currentStepId.value).inProcessing = true;
 }
   
