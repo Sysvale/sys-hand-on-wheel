@@ -5,6 +5,7 @@ import RequestSelect from './RequestSelect.vue';
 import FormWizard from './FormWizard.vue';
 import Form from './Form.vue';
 import Field from './Field.vue';
+import FieldArray from './FieldArray.vue';
 import FeatureWrapper from './FeatureWrapper.vue';
 /** -------*/
 
@@ -37,6 +38,7 @@ export default {
         app.component('ShowRequestSelect', RequestSelect);
         app.component('ShowForm', Form);
         app.component('ShowField', Field);
+        app.component('ShowFieldArray', FieldArray);
         app.component('ShowFormWizard', FormWizard);
         app.component('ShowFeatureWrapper', FeatureWrapper);
 
