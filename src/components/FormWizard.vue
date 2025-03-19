@@ -18,6 +18,7 @@
 				<component
 					:is="step.component"
 					:step-values="model[step.id]"
+					:is-active="step.id === currentStepId"
 				/>
 			</Form>
 		</template>
