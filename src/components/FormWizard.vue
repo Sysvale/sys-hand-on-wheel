@@ -93,6 +93,14 @@ provide('$setFieldValue', (field, value, formId) => {
 	forms.value[stepId].setFieldValue(field, value);
 });
 
+provide('$getValues', (stepId = null) => {
+	if(!stepId) {
+		return model.value;
+	}
+
+	return forms.value[stepId].getValues();
+});
+
 const model = defineModel();
 const forms = ref({});
 const headers = ref([]);
@@ -229,7 +237,7 @@ const goToNextStep = () => {
 		emit('submit', model.value);
 		return;
 	};
-	const previousStep = JSON.parse(JSON.stringify(currentStep.value));
+	const previousStep = { ...currentStep.value };
 	currentStepId.value = nextStep.id;
 	emit('next', { nextStep, previousStep });
 	headers.value.find((step) => step.id === currentStepId.value).inProcessing = true;
