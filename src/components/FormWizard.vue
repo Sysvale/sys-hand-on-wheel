@@ -73,6 +73,13 @@ const props = defineProps({
 		type: Function,
 		default: (isFirstStep) => isFirstStep ? 'Anterior' : 'Anterior',
 	},
+	nextResolver: {
+		type: Function,
+		default: (values, next) => new Promise((resolve) => {
+			next();
+			resolve(values);
+		}),
+	},
 });
 
 const emit = defineEmits(['next', 'previous', 'submit']);
@@ -99,7 +106,7 @@ provide('$getValues', (stepId = null) => {
 		return model.value;
 	}
 
-	return forms.value?.[stepId]?.getValues() || {};
+	return forms.value?.[stepId]?.getValues() || null;
 });
 
 const model = defineModel();
@@ -226,10 +233,20 @@ const handleNextStep = async () => {
 		valid: state.valid,
 	};
 
-	if(state.valid) {
+	const next = () => {
 		buildHeaders();
 		goToNextStep();
 	}
+
+	if(state.valid) {
+		const nextResolver = currentStep.value?.nextResolver ?? props.nextResolver;
+		await nextResolver(
+			forms.value[currentStepId.value].getValues(),
+			next,
+			state.valid,
+		);
+	}
+
 }
 
 const goToNextStep = () => {
