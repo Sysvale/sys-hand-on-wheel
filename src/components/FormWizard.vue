@@ -241,7 +241,10 @@ const handleNextStep = async () => {
 	if(state.valid) {
 		const nextResolver = currentStep.value?.nextResolver ?? props.nextResolver;
 		await nextResolver(
-			forms.value[currentStepId.value].getValues(),
+			{
+				step: currentStepId.value,
+				values: forms.value[currentStepId.value].getValues()
+			},
 			next,
 			state.valid,
 		);
