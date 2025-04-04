@@ -31,6 +31,7 @@
 				:disabled="isFirstStep || disablePreviousButton"
 				secondary
 				:size="navigationButtonsSize"
+				@button-click="goToPreviousStep"
 			>
 				Anterior
 			</cds-button>
@@ -38,6 +39,7 @@
 				:disabled="disableNextButton"
 				:variant="nextButtonVariant"
 				:size="navigationButtonsSize"
+				@button-click="handleNextStep"
 			>
 				{{ nextButtonLabelResolver(isLastStep) }}
 			</cds-button>
