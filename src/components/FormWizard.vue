@@ -30,13 +30,14 @@
 			<cds-button
 				:disabled="isFirstStep || disablePreviousButton"
 				secondary
-				@click="goToPreviousStep"
+				:size="navigationButtonsSize"
 			>
 				Anterior
 			</cds-button>
 			<cds-button
 				:disabled="disableNextButton"
-				@click="handleNextStep"
+				:variant="nextButtonVariant"
+				:size="navigationButtonsSize"
 			>
 				{{ nextButtonLabelResolver(isLastStep) }}
 			</cds-button>
@@ -81,6 +82,14 @@ const props = defineProps({
 			resolve(values);
 		}),
 	},
+	navigationButtonsSize: {
+		type: String,
+		default: 'md',
+	},
+	nextButtonVariant: {
+		type: String,
+		default: 'green',
+	}
 });
 
 const emit = defineEmits(['next', 'previous', 'submit']);
