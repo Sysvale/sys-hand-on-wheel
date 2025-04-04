@@ -3,6 +3,7 @@
 		<cds-stepper
 			:steps="computedHeaders"
 			:value="currentHeaderStep"
+			disable-on-click
 		/>
 		<cds-spacer :margin-bottom="4" />
 		<template
