@@ -1,6 +1,6 @@
 {
 	"name": "@sysvale/show",
-	"version": "1.6.0",
+	"version": "1.7.0",
 	"description": "A set of components used at Sysvale",
 	"repository": {
 		"type": "git",
@@ -34,6 +34,7 @@
 		"lodash.reduce": "^4.6.0",
 		"lodash.snakecase": "^4.1.1",
 		"sweetalert2": "^11.3.5",
+		"tslib": "^2.8.1",
 		"vue": "^3.2.37"
 	},
 	"devDependencies": {
@@ -44,7 +45,6 @@
 		"@vue/test-utils": "^2.0.2",
 		"babel-loader": "^8.2.5",
 		"concat": "^1.0.3",
-		"esbuild-linux-64": "^0.15.18",
 		"eslint": "^8.31.0",
 		"eslint-plugin-vue": "^9.9.0",
 		"jsdom": "^20.0.0",
