@@ -5,6 +5,10 @@ import RequestSelect from './RequestSelect.vue';
 import FeatureWrapper from './FeatureWrapper.vue';
 /** -------*/
 
+/** Composables */
+import { useRequest } from '@/composables/useRequest';
+/* -------*/
+
 /** Utils */
 import {
     convertKeysToCamelCase,
@@ -15,6 +19,7 @@ import {
 } from '../utils';
 /* -------*/
 
+export { useRequest };
 
 export default {
     install(app: any, options: any) {
