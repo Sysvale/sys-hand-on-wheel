@@ -19,9 +19,12 @@ const ERROR_SWAL_DEFAULT_CONFIG = {
 	icon: 'error',
 	title: 'Erro',
 	text: 'mensagem de error',
-	showCancelButton: true,
 	showConfirmButton: false,
-	cancelButtonText: 'Fechar',
+	toast: true,
+	position: 'top-end',
+	timer: 5000,
+  	timerProgressBar: true,
+	showCloseButton: true,
 };
 
 export default {
