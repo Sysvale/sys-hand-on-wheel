@@ -10,18 +10,22 @@ type JsonResponse = {
 	request: Object;
 }
 
+type RequestConfig = {
+	dataResolver?: (data: Object|null) => Object,
+	payloadResolver?: (payload: Object|null) => Object,
+};
+
 export function useRequest<R = JsonResponse>(
 	requestFn: (...args: any[]) => Promise<JsonResponse>,
-	dataResolver?: (data: Object|null) => R,
-	payloadResolver?: (payload: Object|null) => R
+	config: RequestConfig
 ) {
 	const loading = ref<Boolean>(false);
 	const error = ref<Error | null>(null);
 	const data = ref<Object | null>(null);
 	const status = ref<Number | null>(null);
 
-	const internalDataResolver = dataResolver || convertKeysToCamelCase;
-	const internalPayloadResolver = payloadResolver || convertKeysToSnakeCase;
+	const internalDataResolver = config?.dataResolver || convertKeysToCamelCase;
+	const internalPayloadResolver = config?.payloadResolver || convertKeysToSnakeCase;
 
 	const action = (payload: object|null) => {
 		loading.value = true;
