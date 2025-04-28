@@ -1,6 +1,6 @@
 {
 	"name": "@sysvale/show",
-	"version": "1.8.0",
+	"version": "1.9.0",
 	"description": "A set of components used at Sysvale",
 	"repository": {
 		"type": "git",
@@ -38,7 +38,8 @@
 		"lodash.unset": "^4.5.2",
 		"sweetalert2": "^11.3.5",
 		"tslib": "^2.8.1",
-		"vue": "^3.2.37"
+		"vee-validate": "^4.15.0",
+		"vue": "^3.5.13"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.10",
