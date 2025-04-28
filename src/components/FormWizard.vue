@@ -121,6 +121,10 @@ provide('$getValues', (stepId = null) => {
 	return forms.value?.[stepId]?.getValues() || null;
 });
 
+provide('$getCurrentStepId', () => {
+	return currentStepId.value;
+});
+
 const model = defineModel();
 const forms = ref({});
 const headers = ref([]);
