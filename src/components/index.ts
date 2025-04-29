@@ -11,6 +11,7 @@ import FeatureWrapper from './FeatureWrapper.vue';
 
 /** Composables */
 import { useRequest } from '@/composables/useRequest';
+import { useDialog } from '@/composables/useDialog';
 /* -------*/
 
 /** Utils */
@@ -24,7 +25,7 @@ import {
 } from '../utils';
 /* -------*/
 
-export { useRequest };
+export { useRequest, useDialog };
 
 export default {
     install(app: any, options = {
