@@ -218,6 +218,14 @@ export default {
 			this.succeeded = false;
 			this.error = null;
 		},
+
+		reset() {
+			this.loading = false;
+			this.failed = false;
+			this.succeeded = false;
+			this.error = null;
+			this.data = this.initialData;
+		},
 	},
 
 	render() {
@@ -226,6 +234,7 @@ export default {
 			...this.requestState,
 			action: this.action,
 			loadingTextResolver: this.loadingTextResolver,
+			reset: this.reset,
 			errorMessage: getFirstErrorMessage(
 				get(this.error, 'response.data', null),
 				'Um erro aconteceu... por favor, tente novamente. Se o erro persistir, contate o suporte.',
