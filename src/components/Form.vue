@@ -20,5 +20,6 @@ defineExpose({
   resetForm: () => veeFormInstance.value.resetForm(),
   setFieldError: (field, error) => veeFormInstance.value.setFieldError(field, error),
   getValues: () => veeFormInstance.value.values,
+  getInstance: () => veeFormInstance.value,
 });
 </script>
