@@ -20,6 +20,8 @@
 					:is="step.component"
 					:step-values="model[step.id]"
 					:is-active="step.id === currentStepId"
+					v-bind="step?.props"
+					v-on="step?.events"
 				/>
 			</Form>
 		</template>
@@ -108,9 +110,9 @@ provide('$resetField', (field, formId) => {
 	forms.value[stepId].resetField(field);
 });
 
-provide('$setFieldValue', (field, value, formId) => {
-	const stepId = formId || currentStepId.value;
-	forms.value[stepId].setFieldValue(field, value);
+provide('$setFieldValue', (field, value, stepIdArgument = null) => {
+	const stepId = stepIdArgument || currentStepId.value;
+	forms.value?.[stepId]?.setFieldValue(field, value);
 });
 
 provide('$getValues', (stepId = null) => {
@@ -119,6 +121,28 @@ provide('$getValues', (stepId = null) => {
 	}
 
 	return forms.value?.[stepId]?.getValues() || null;
+});
+
+provide('$setValues', (values, stepId = null) => {
+	if(stepId) {
+		forms.value?.[stepId]?.setValues(values);
+		return;
+	}
+
+	Object.keys(values).forEach((key) => {
+		forms.value?.[key]?.setValues(values[key]);
+	});
+});
+
+provide('$resetForm', (values, stepId = null) => {
+	if(stepId) {
+		forms.value?.[stepId]?.resetForm(values);
+		return;
+	}
+
+	Object.keys(values).forEach((key) => {
+		forms.value?.[key]?.resetForm(values[key]);
+	});
 });
 
 provide('$getCurrentStepId', () => {
