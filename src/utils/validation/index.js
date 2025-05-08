@@ -1,4 +1,5 @@
 import {
+	email,
 	required,
 	min,
 	max,
@@ -10,7 +11,6 @@ import cep from './validators/cep';
 import cnpj from './validators/cnpj';
 import cns from './validators/cns';
 import cpf from './validators/cpf';
-import email from './validators/email';
 import name from './validators/name';
 import passwordConfirmation from './validators/passwordConfirmation';
 import phone from './validators/phone';
