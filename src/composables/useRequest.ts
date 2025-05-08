@@ -33,13 +33,19 @@ export function useRequest<R = JsonResponse>(
 
 		const resolvedPayload = payload ? internalPayloadResolver(payload) : payload;
 	
-		requestFn(resolvedPayload)
+		return requestFn(resolvedPayload)
 			.then((response) => {
 				data.value = internalDataResolver(response?.data);
 				status.value = response?.status;
+				return {
+					...response,
+					data: data.value,
+				};
+
 			})
 			.catch(err => {
 				error.value = err;
+				throw err;
 			})
 			.finally(() => {
 				loading.value = false;
