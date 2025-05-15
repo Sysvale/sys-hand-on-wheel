@@ -11,11 +11,21 @@ jobs:
     steps:
       - name: 📚 Checkout
         uses: actions/checkout@v2
-      - name: 🟢 Node
+
+      - name: 🟢 Setup Node
         uses: actions/setup-node@v2.1.4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: 🔧 Build
-        run: npm i
-      - name: 🚀 Test
-        run: npm run test
+
+      - name: 🔧 Install dependencies
+        run: npm install
+
+      - name: 🚀 Run tests with coverage
+        run: npx vitest run --coverage
+
+      - name: 📊 Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/
