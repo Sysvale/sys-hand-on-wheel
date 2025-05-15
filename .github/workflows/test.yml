@@ -25,7 +25,7 @@ jobs:
 
       - name: 📊 Upload coverage report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: coverage-report
           path: coverage/
