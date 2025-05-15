@@ -1,37 +1,21 @@
-name: Vitest CI
+name: "Tester ⚗️"
 
 on: [push]
 
 jobs:
-  test:
-    name: Run Vitest
+  build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
-
+        node-version: [18, 20, 22]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: 📚 Checkout
+        uses: actions/checkout@v2
+      - name: 🟢 Node
+        uses: actions/setup-node@v2.1.4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
-
-      - name: Run Vitest
-        run: npm run test -- --coverage
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage/
+      - name: 🔧 Build
+        run: npm i
+      - name: 🚀 Test
+        run: npm run test
