@@ -47,6 +47,7 @@
 		"@rollup/plugin-typescript": "^8.4.0",
 		"@types/vue": "^2.0.0",
 		"@vitejs/plugin-vue": "^3.0.3",
+		"@vitest/coverage-c8": "^0.22.1",
 		"@vue/test-utils": "^2.0.2",
 		"babel-loader": "^8.2.5",
 		"concat": "^1.0.3",
