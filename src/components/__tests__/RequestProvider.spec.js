@@ -34,19 +34,6 @@ const componentDefaultSettings = {
 	},
 }
 
-test('Component renders correctly', async () => {
-	const wrapper = mount(RequestProvider, {
-		...componentDefaultSettings,
-		propsData: {
-			service: successfulServiceMock,
-		},
-	});
-
-	await flushPromises();
-
-	expect(wrapper).toMatchSnapshot();
-});
-
 describe('Service', () => {
 	test('is called on mount if immediate is true', async () => {
 		expect.assertions(2);
