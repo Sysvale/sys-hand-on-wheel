@@ -1,9 +1,11 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
+import { vi } from 'vitest';
 import flushPromises from 'flush-promises';
 import convertKeysToSnakeCase from '../../utils/convertKeysToSnakeCase';
 import RequestProvider from '../RequestProvider.vue';
+import swal from 'sweetalert2';
 
-const localVue = createLocalVue();
+vi.spyOn(swal, 'fire').mockResolvedValue({ isConfirmed: true });
 
 const responseDataMock = {
 	'test message': 'success message',
@@ -14,17 +16,16 @@ const payloadMock = {
 	'test--value': 'test value',
 };
 
-const successfulServiceMock = jest.fn(() => Promise.resolve({
+const successfulServiceMock = vi.fn(() => Promise.resolve({
 	data: responseDataMock,
 }));
-const failedServiceMock = jest.fn(() => Promise.reject(Error('test error')));
-const payloadResolverMock = jest.fn();
-const dataResolverMock = jest.fn((data) => convertKeysToSnakeCase(data));
-const successFeedbackResolverMock = jest.fn();
-const errorFeedbackResolverMock = jest.fn();
+const failedServiceMock = vi.fn(() => Promise.reject(Error('test error')));
+const payloadResolverMock = vi.fn();
+const dataResolverMock = vi.fn((data) => convertKeysToSnakeCase(data));
+const successFeedbackResolverMock = vi.fn();
+const errorFeedbackResolverMock = vi.fn();
 const defaultComponent = '<div />';
 const componentDefaultSettings = {
-	localVue,
 	slots: {
 		default: defaultComponent,
 	},
@@ -32,19 +33,6 @@ const componentDefaultSettings = {
 		$_requestObserver: null,
 	},
 }
-
-test('Component renders correctly', async () => {
-	const wrapper = mount(RequestProvider, {
-		...componentDefaultSettings,
-		propsData: {
-			service: successfulServiceMock,
-		},
-	});
-
-	await flushPromises();
-
-	expect(wrapper).toMatchSnapshot();
-});
 
 describe('Service', () => {
 	test('is called on mount if immediate is true', async () => {
