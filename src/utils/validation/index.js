@@ -15,6 +15,8 @@ import cpf from './validators/cpf';
 import name from './validators/name';
 import passwordConfirmation from './validators/passwordConfirmation';
 import phone from './validators/phone';
+import mobilePhoneRule from './validators/mobilePhone';
+import landline from './validators/rules/landline';
 import mixedLetters from './validators/mixedLetters';
 import hasNumber from './validators/hasNumber';
 import symbol from './validators/symbol';
@@ -35,6 +37,8 @@ export const defineRules = (defineRule) => {
 	defineRule('number', numeric);
 	defineRule('password_confirmation', passwordConfirmation);
 	defineRule('phone', phone);
+	defineRule('landline', landline);
+	defineRule('mobile_phone', mobilePhoneRule);
 	defineRule('mixed_letters', mixedLetters);
 	defineRule('has_number', hasNumber);
 	defineRule('symbol', symbol);
