@@ -33,7 +33,7 @@ export const defineRules = (defineRule) => {
 	defineRule('required', required);
 	defineRule('max', max);
 	defineRule('min', min);
-	defineRules('min_value', min_value);
+	defineRule('min_value', min_value);
 	defineRule('number', numeric);
 	defineRule('password_confirmation', passwordConfirmation);
 	defineRule('phone', phone);
