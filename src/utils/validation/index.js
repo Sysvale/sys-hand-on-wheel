@@ -14,6 +14,8 @@ import cpf from './validators/cpf';
 import name from './validators/name';
 import passwordConfirmation from './validators/passwordConfirmation';
 import phone from './validators/phone';
+import mobilePhoneRule from './validators/mobilePhone';
+import landline from './validators/rules/landline';
 
 
 export const defineRules = (defineRule) => {
@@ -30,4 +32,6 @@ export const defineRules = (defineRule) => {
 	defineRule('number', numeric);
 	defineRule('password_confirmation', passwordConfirmation);
 	defineRule('phone', phone);
+	defineRule('landline', landline);
+	defineRule('mobile_phone', mobilePhoneRule);
 };
