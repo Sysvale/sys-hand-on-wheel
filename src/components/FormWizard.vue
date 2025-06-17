@@ -110,6 +110,11 @@ provide('$resetField', (field, formId) => {
 	forms.value[stepId].resetField(field);
 });
 
+provide('$setFieldError', (field, value, stepIdArgument = null) => {
+	const stepId = stepIdArgument || currentStepId.value;
+	forms.value?.[stepId]?.setFieldError(field, value);
+});
+
 provide('$setFieldValue', (field, value, stepIdArgument = null) => {
 	const stepId = stepIdArgument || currentStepId.value;
 	forms.value?.[stepId]?.setFieldValue(field, value);
