@@ -6,7 +6,7 @@ const isArray = (arg) => Array.isArray(arg);
 const convertKeysToSnakeCase = (data) => {
 	if (isArray(data)) {
 		return data.map((element) => {
-			if (isObject(element) || isArray(element)) {
+			if ((isObject(element) || isArray(element)) && !(element instanceof File)) {
 				return convertKeysToSnakeCase(element);
 			}
 			return element;
@@ -14,7 +14,7 @@ const convertKeysToSnakeCase = (data) => {
 	}
 	const newData = {};
 	Object.keys(data).forEach((key) => {
-		if (isObject(data[key]) || isArray(data[key])) {
+		if ((isObject(data[key]) || isArray(data[key])) && !(data[key] instanceof File)) {
 			newData[snakeCase(key)] = convertKeysToSnakeCase(data[key]);
 		} else {
 			newData[snakeCase(key)] = data[key];
