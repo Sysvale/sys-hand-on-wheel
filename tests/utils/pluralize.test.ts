@@ -30,6 +30,7 @@ describe('pluralize()', () => {
 	});
 
 	test('convert custom irregulars properly', () => {
+		expect(pluralize(2, 'órgão')).toBe('órgãos');
 		expect(pluralize(2, 'cônsul')).not.toBe('cônsules');
 		expect(pluralize(2, 'cônsul', undefined, { cônsul: 'cônsules'})).toBe('cônsules');
 		expect(pluralize(2, 'maçã', undefined, { maçã: 'maçãs'})).toBe('maçãs');
