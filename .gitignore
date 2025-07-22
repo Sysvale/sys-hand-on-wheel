@@ -3,3 +3,6 @@ npm-debug.log*
 package-lock.json
 /dist
 /coverage
+.yalc
+.yalc/*
+yalc.lock
