@@ -11,7 +11,6 @@ export function pluralize(
 	}
 
 	const absCount = Math.abs(count ?? 2);
-	console.log('test TS');
 
 	if (absCount >= 2) {
 		if (suffix) { // sufixo personalizado fornecido por quem chama a função
