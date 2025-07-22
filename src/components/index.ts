@@ -24,10 +24,11 @@ import {
 	setupVeeValidateWrapper,
 	pluralize,
 	pluralizeWithCount,
+	pluralizeWords,
 } from '../utils';
 /* -------*/
 
-export { useRequest, useDialog, pluralize, pluralizeWithCount };
+export { useRequest, useDialog, pluralize, pluralizeWithCount, pluralizeWords };
 
 export default {
 	install(app: any, options = {
