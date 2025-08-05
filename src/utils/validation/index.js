@@ -5,6 +5,7 @@ import {
 	max,
 	numeric,
 	min_value,
+	size,
 } from '@vee-validate/rules';
 
 import alphaNumSpaces from './validators/alphaNumSpaces';
@@ -43,4 +44,5 @@ export const defineRules = (defineRule) => {
 	defineRule('has_number', hasNumber);
 	defineRule('symbol', symbol);
 	defineRule('strong_password', strongPassword);
+	defineRule('size', size);
 };
