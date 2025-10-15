@@ -37,7 +37,7 @@ export function useRequestLoadings() {
 		return hasTrue || allNull;
 	});
 
-	const isSettled = computed<boolean>(() => {
+	const isLoadingSettled = computed<boolean>(() => {
 		const values = entries.map(e => e.loading);
 		if (values.length === 0) return true;
 		return values.every(v => v === false);
@@ -47,6 +47,6 @@ export function useRequestLoadings() {
 		registerRequestLoading,
 		unregisterRequestLoading,
 		isAnyLoading,
-		isSettled
+		isLoadingSettled
 	};
 }

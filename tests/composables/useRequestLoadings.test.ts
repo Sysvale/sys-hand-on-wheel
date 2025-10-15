@@ -160,59 +160,59 @@ describe('isAnyLoading computed', () => {
 	});
 });
 
-describe('isSettled computed', () => {
+describe('isLoadingSettled computed', () => {
 	it('should return true when there are no registered loadings', () => {
-		const { isSettled } = useRequestLoadings();
+		const { isLoadingSettled } = useRequestLoadings();
 
-		expect(isSettled.value).toBe(true);
+		expect(isLoadingSettled.value).toBe(true);
 	});
 
 	it('should return true when all registered loadings are false', () => {
-		const { registerRequestLoading, isSettled } = useRequestLoadings();
+		const { registerRequestLoading, isLoadingSettled } = useRequestLoadings();
 		const loadingRef1 = ref(false);
 		const loadingRef2 = ref(false);
 
 		registerRequestLoading('id-1', loadingRef1);
 		registerRequestLoading('id-2', loadingRef2);
 
-		expect(isSettled.value).toBe(true);
+		expect(isLoadingSettled.value).toBe(true);
 	});
 
 	it('should return false when at least one loading is true', () => {
-		const { registerRequestLoading, isSettled } = useRequestLoadings();
+		const { registerRequestLoading, isLoadingSettled } = useRequestLoadings();
 		const loadingRef1 = ref(false);
 		const loadingRef2 = ref(true);
 
 		registerRequestLoading('id-1', loadingRef1);
 		registerRequestLoading('id-2', loadingRef2);
 
-		expect(isSettled.value).toBe(false);
+		expect(isLoadingSettled.value).toBe(false);
 	});
 
 	it('should return false when at least one loading is null', () => {
-		const { registerRequestLoading, isSettled } = useRequestLoadings();
+		const { registerRequestLoading, isLoadingSettled } = useRequestLoadings();
 		const loadingRef1 = ref(false);
 		const loadingRef2 = ref(null);
 
 		registerRequestLoading('id-1', loadingRef1);
 		registerRequestLoading('id-2', loadingRef2);
 
-		expect(isSettled.value).toBe(false);
+		expect(isLoadingSettled.value).toBe(false);
 	});
 
 	it('should reactively update when loading references change', () => {
-		const { registerRequestLoading, isSettled } = useRequestLoadings();
+		const { registerRequestLoading, isLoadingSettled } = useRequestLoadings();
 		const loadingRef = ref(true);
 
 		registerRequestLoading('reactive-test', loadingRef);
-		expect(isSettled.value).toBe(false);
+		expect(isLoadingSettled.value).toBe(false);
 
 		loadingRef.value = false;
-		expect(isSettled.value).toBe(true);
+		expect(isLoadingSettled.value).toBe(true);
 	});
 
 	it('should return false when any value is not false', () => {
-		const { registerRequestLoading, isSettled } = useRequestLoadings();
+		const { registerRequestLoading, isLoadingSettled } = useRequestLoadings();
 		const loadingRef1 = ref(true);
 		const loadingRef2 = ref(null);
 		const loadingRef3 = ref(false);
@@ -221,13 +221,13 @@ describe('isSettled computed', () => {
 		registerRequestLoading('id-2', loadingRef2);
 		registerRequestLoading('id-3', loadingRef3);
 
-		expect(isSettled.value).toBe(false);
+		expect(isLoadingSettled.value).toBe(false);
 	});
 });
 
 describe('integration tests', () => {
 	it('should work correctly with multiple register/unregister operations', () => {
-		const { registerRequestLoading, unregisterRequestLoading, isAnyLoading, isSettled } = useRequestLoadings();
+		const { registerRequestLoading, unregisterRequestLoading, isAnyLoading, isLoadingSettled } = useRequestLoadings();
 		const loadingRef1 = ref(false);
 		const loadingRef2 = ref(true);
 		const loadingRef3 = ref(null);
@@ -236,15 +236,15 @@ describe('integration tests', () => {
 		registerRequestLoading('id-2', loadingRef2);
 
 		expect(isAnyLoading.value).toBe(true);
-		expect(isSettled.value).toBe(false);
+		expect(isLoadingSettled.value).toBe(false);
 
 		unregisterRequestLoading('id-2');
 		expect(isAnyLoading.value).toBe(false);
-		expect(isSettled.value).toBe(true);
+		expect(isLoadingSettled.value).toBe(true);
 
 		registerRequestLoading('id-3', loadingRef3);
 		expect(isAnyLoading.value).toBe(true);
-		expect(isSettled.value).toBe(false);
+		expect(isLoadingSettled.value).toBe(false);
 	});
 
 	it('should handle rapid changes in loading states', () => {
