@@ -2,6 +2,7 @@
   <VeeForm
     v-bind="$attrs"
     ref="veeFormInstance"
+    v-on="$listeners"
   >
     <slot />
   </VeeForm>

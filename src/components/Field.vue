@@ -4,6 +4,7 @@
     v-slot="{ field, errors }"
     :validate-on-change="validateOnChange"
     :validate-on-model-update="validateOnModelUpdate"
+    v-on="$listeners"
   >
 	  <slot
       :field="{
