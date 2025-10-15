@@ -1,14 +1,11 @@
 <template>
 	<VeeFieldArray
     v-bind="$attrs"
-    v-slot="{ fields, push, remove, ...fieldArray }"
+    v-slot="slotProps"
     v-on="$listeners"
   >
 	  <slot
-      :fields="fields"
-      :push="push"
-      :remove="remove"
-      v-bind="fieldArray"
+      v-bind="slotProps"
     />
 </VeeFieldArray>
 </template>
