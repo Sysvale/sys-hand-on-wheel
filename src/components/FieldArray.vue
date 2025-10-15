@@ -1,12 +1,15 @@
 <template>
 	<VeeFieldArray
     v-bind="$attrs"
-    v-slot="{ fields, push, remove }"
+    v-slot="{ fields, push, remove, ...context }"
+    v-on="$listeners"
   >
 	  <slot
       :fields="fields"
       :push="push"
       :remove="remove"
+      v-bind="context"
+
     />
 </VeeFieldArray>
 </template>
