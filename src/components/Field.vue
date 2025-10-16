@@ -12,7 +12,8 @@
         field: {
           ...slotProps.field,
           errorMessage: slotProps.errors[0],
-          state: slotProps.errors[0] ? 'invalid' : 'default'
+          state: slotProps.errors[0] ? 'invalid' : 'default',
+					modelValue: slotProps.field.value,
         }
       }"
     />
