@@ -10,8 +10,9 @@ import FeatureWrapper from './FeatureWrapper.vue';
 /** -------*/
 
 /** Composables */
-import { useRequest } from '@/composables/useRequest';
 import { useDialog } from '@/composables/useDialog';
+import { useRequest } from '@/composables/useRequest';
+import { useRequestLoadings } from '@/composables/useRequestLoadings';
 /* -------*/
 
 /** Utils */
@@ -28,7 +29,14 @@ import {
 } from '../utils';
 /* -------*/
 
-export { useRequest, useDialog, pluralize, pluralizeWithCount, pluralizeWords };
+export {
+	pluralize,
+	pluralizeWithCount,
+	pluralizeWords,
+	useDialog,
+	useRequest,
+	useRequestLoadings
+};
 
 export default {
 	install(app: any, options = {
@@ -60,18 +68,18 @@ export default {
 		};
 
 		const version = Number(app.version.split('.')[0]);
-		
+
 		if (version <= 2) {
 			throw new Error('Essa versão só é compatível com projetos que possuem o Vue 3. Para projetos com a Vue 2, utilize a versão 0.3.0 ou inferior');
 		}
-		
+
 		if (version > 2) {
 			// ficará disponível apenas com o uso do Options API
 			Object.keys(utils).forEach((key: string) => {
 				app.config.globalProperties[key] = utils[key];
 			});
 
-			// wrapper do vee-validate  
+			// wrapper do vee-validate
 			app.config.globalProperties.$showVeeValidate = veeValidateWrapper;
 		}
 	},
