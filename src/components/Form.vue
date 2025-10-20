@@ -2,8 +2,9 @@
   <VeeForm
     v-bind="$attrs"
     ref="veeFormInstance"
+    v-slot="slotProps"
   >
-    <slot />
+    <slot v-bind="slotProps" />
   </VeeForm>
 </template>
 
