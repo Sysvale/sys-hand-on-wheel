@@ -1,6 +1,6 @@
 {
 	"name": "@sysvale/show",
-	"version": "1.23.2",
+	"version": "1.24.0",
 	"description": "A set of components used at Sysvale",
 	"repository": {
 		"type": "git",
