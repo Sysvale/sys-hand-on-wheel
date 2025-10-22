@@ -5,6 +5,7 @@ import {
 	max,
 	numeric,
 	min_value,
+	max_value,
 	size,
 } from '@vee-validate/rules';
 
@@ -35,6 +36,7 @@ export const defineRules = (defineRule) => {
 	defineRule('max', max);
 	defineRule('min', min);
 	defineRule('min_value', min_value);
+	defineRule('max_value', max_value);
 	defineRule('number', numeric);
 	defineRule('password_confirmation', passwordConfirmation);
 	defineRule('phone', phone);
