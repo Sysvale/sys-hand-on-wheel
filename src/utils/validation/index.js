@@ -7,6 +7,7 @@ import {
 	min_value,
 	max_value,
 	size,
+	digits,
 } from '@vee-validate/rules';
 
 import alphaNumSpaces from './validators/alphaNumSpaces';
@@ -35,6 +36,7 @@ export const defineRules = (defineRule) => {
 	defineRule('required', required);
 	defineRule('max', max);
 	defineRule('min', min);
+	defineRule('digits', digits);
 	defineRule('min_value', min_value);
 	defineRule('max_value', max_value);
 	defineRule('number', numeric);
